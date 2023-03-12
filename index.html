@@ -7,57 +7,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
-    <style>
-        .btn-group {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            padding: 10px 0px;
-            background-color: rgba(251, 210, 64, 0.42);
-        }
-
-        button {
-            z-index: 20;
-            display: block;
-
-            width: 70px;
-            height: 70px;
-
-            border: 0px;
-
-            background-repeat: no-repeat;
-            background-color: transparent;
-            background-clip: border-box;
-            background-size: cover;
-        }
-
-        #next {
-            background-image: url("{{url_for('static', filename='assets/icons/next.png')}}");
-        }
-
-        #prev {
-            background-image: url("{{url_for('static', filename='assets/icons/prev.png')}}");
-        }
-
-        #snapshot {
-            background-image: url("{{url_for('static', filename='assets/icons/snapshot.png')}}");
-        }
-    </style>
 </head>
   <body>
-    <div class="btn-group">
-        <button id="prev" onclick="OnPrevClick()"></button>
-        <button id="snapshot" onclick="getScreenshot()"></button>
-        <button id="next" onclick="OnNextClick()"></button>
-    </div>
-    <a-scene style="z-index: -20;">
+    <a-scene>
         <a-assets>
-          
-          
+          <img id="hat" crossorigin="anonymous"
+                src="https://cdn.glitch.global/8cd2ee54-a770-4224-88fc-e8ed68987492/Illyustratsia_bez_nazvania%20(1).png?v=1642923324848" />    
         </a-assets>
         <a-entity zappar-permissions-ui id="permissions"></a-entity>
         <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
 
         <a-entity camera zappar-camera="user-facing: true; user-camera-mirror-mode: poses""> </a-entity>
+        <a-entity zappar-face id="my-face-tracker">
+             id="facemesh0" geometry="primitive: plane;"
+                    material="src:#hat; transparent: true;" rotation="0 0 0" 
+                    scale="1.5 1.5 1.5" position="0 0.7 .8"
+        </a-entity>
+    </a-scene>
 
-        <a-entity zappar-face id="face-track">
+<script>
+
+let myFaceTracker = document.getElementById("my-face-tracker");
+
+myFaceTracker.addEventListener("zappar-visible", () => {
+  console.log("Face has become visible");
+});
+
+myFaceTracker.addEventListener("zappar-notvisible", () => {
+  console.log("Face is no longer visible");
+});
+
+</script>
+                                         </body>
+
+</html>
